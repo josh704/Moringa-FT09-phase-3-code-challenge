@@ -7,14 +7,14 @@ class Magazine:
         self.category = category
 
     def __repr__(self):
-        return f'<Magazine {self.name}>'
+        return f"<Magazine {self.name}>"
 
     def articles(self):
         """Return a list of articles associated with this magazine."""
         from models.article import Article  
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM articles WHERE magazine_id = ?', (self.id,))
+        cursor.execute("SELECT * FROM articles WHERE magazine_id = ?", (self.id,))
         articles_data = cursor.fetchall()
         conn.close()
         return [Article(article["id"], article["title"], article["content"], article["author_id"], article["magazine_id"]) for article in articles_data]
@@ -37,7 +37,7 @@ class Magazine:
         """Return the titles of all articles for this magazine."""
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT title FROM articles WHERE magazine_id = ?', (self.id,))
+        cursor.execute("SELECT title FROM articles WHERE magazine_id = ?", (self.id,))
         titles = cursor.fetchall()
         conn.close()
         return [title["title"] for title in titles] if titles else None

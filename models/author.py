@@ -6,14 +6,14 @@ class Author:
         self.name = name
 
     def __repr__(self):
-        return f'<Author {self.name}>'
+        return f"<Author {self.name}>"
 
     def articles(self):
         """Return a list of articles associated with this author."""
         from models.article import Article  
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM articles WHERE author_id = ?', (self.id,))
+        cursor.execute("SELECT * FROM articles WHERE author_id = ?", (self.id,))
         articles_data = cursor.fetchall()
         conn.close()
         return [Article(article["id"], article["title"], article["content"], article["author_id"], article["magazine_id"]) for article in articles_data]
